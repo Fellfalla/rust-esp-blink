@@ -1,0 +1,49 @@
+{
+
+  "name": "esp32",
+
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+        "installZsh": true,
+        "configureZshAsDefaultShell": true,
+        "installOhMyZsh": true,
+        "upgradePackages": false,
+        "username": "esp"
+    },
+    // From https://github.com/stuartleeks/dev-container-features
+    "ghcr.io/stuartleeks/dev-container-features/shell-history:0": {
+        "version": "latest"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "Swellaby.rust-pack",
+        "1YiB.rust-bundle",
+        "genieai.chatgpt-vscode",
+        "serayuzgur.crates",
+        "mhutchie.git-graph"
+      ]
+    }
+  },
+
+  // More info: https://aka.ms/dev-containers-non-root.
+  "remoteUser": "esp",
+  
+  "forwardPorts": [3000],
+  "privileged": true,
+  "runArgs": [
+    // Environment variables
+    "--env-file", ".devcontainer/devcontainer.env",
+    // For maintaining ccache's cache between container rebuilds. The default is in the user $HOME
+    "-e", "CCACHE_DIR=${containerWorkspaceFolder}/.ccache",
+    "--privileged",
+    "-v", "/dev:/dev"
+  ]
+}
